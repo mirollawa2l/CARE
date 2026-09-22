@@ -1,0 +1,102 @@
+Enum User_Role {
+  Khadem
+  Amin_Khedma
+  Amin_Dof3a
+  Admin
+}
+
+Enum Region {
+  Janaklees
+  Victoria
+  Sidi_bishr
+}
+
+Table User {
+  id uuid [pk]
+  name varchar [not null]
+  username varchar [not null, unique]
+  password_hash varchar [not null]
+  role User_Role [not null]
+  phone_number varchar
+  osra_id uuid
+  created_at timestamp
+}
+
+Table Makhdom {
+  id uuid [pk]
+  name varchar [not null]
+  phone varchar
+  dob date
+  location varchar
+  region Region
+  osra_id uuid [not null]
+}
+
+Table Khedma {
+  id uuid [pk]
+  name varchar [not null]
+  description text
+  created_at timestamp
+}
+
+Table Dof3a {
+  id uuid [pk]
+  name varchar [not null]
+  gender varchar
+  khedma_id uuid [not null]
+  created_at timestamp
+}
+
+Table Osra {
+  id uuid [pk]
+  name varchar [not null]
+  dof3a_id uuid [not null]
+  created_at timestamp
+}
+
+Table Amin_Khedma_users {
+  khedma_id uuid
+  user_id uuid
+
+  indexes {
+    (khedma_id, user_id) [pk]
+  }
+}
+
+Table Amin_Dof3a_users {
+  dof3a_id uuid
+  user_id uuid
+
+  indexes {
+    (dof3a_id, user_id) [pk]
+  }
+}
+
+Table Admin_Khedma {
+  admin_id uuid
+  khedma_id uuid
+
+  indexes {
+    (admin_id, khedma_id) [pk]
+  }
+}
+
+
+// Relationships
+
+Ref: Khedma.id < Dof3a.khedma_id
+
+Ref: Dof3a.id < Osra.dof3a_id
+
+Ref: Osra.id < Makhdom.osra_id
+
+Ref: Osra.id < User.osra_id
+
+Ref: Khedma.id < Amin_Khedma_users.khedma_id
+Ref: User.id < Amin_Khedma_users.user_id
+
+Ref: Dof3a.id < Amin_Dof3a_users.dof3a_id
+Ref: User.id < Amin_Dof3a_users.user_id
+
+Ref: User.id < Admin_Khedma.admin_id
+Ref: Khedma.id < Admin_Khedma.khedma_id
