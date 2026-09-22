@@ -1,5 +1,7 @@
 # Care System
 
+Continuous Assistance, Relationship & Engagement
+
 A centralized **care and follow-up management system** designed to organize families, individuals, servants, and continuous visitation records within the service.
 
 The system helps servants and service administrators maintain structured records, track follow-ups, distribute responsibilities, and ensure that no individual or family is overlooked.
